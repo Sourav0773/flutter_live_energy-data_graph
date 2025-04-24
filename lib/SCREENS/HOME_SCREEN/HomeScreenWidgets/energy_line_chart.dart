@@ -17,10 +17,9 @@ class EnergyLineChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: 300,
+        height: 400,
         width: MediaQuery.sizeOf(context).width * 0.93,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
@@ -32,7 +31,7 @@ class EnergyLineChart extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(15.0),
           child: LineChart(
             LineChartData(
               clipData: FlClipData.all(),
