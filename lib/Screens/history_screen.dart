@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:stream_builder/SCREENS/HISTORY_SCREEN/HistoryScreenWidget/energyTile.dart';
+import 'package:stream_builder/Widgets/energyTile.dart';
+import 'package:stream_builder/Model/data_model.dart';
 
-class HistoryScreen extends StatefulWidget {
-  const HistoryScreen({super.key});
+class HistoryScreen extends StatelessWidget {
+  final List<DataModel> history;
 
-  @override
-  State<HistoryScreen> createState() => HistoryScreenState();
-}
-
-class HistoryScreenState extends State<HistoryScreen> {
-  // Mock data for demonstration
-  final List<Map<String, dynamic>> historyData = List.generate(
-    10,
-    (index) => {
-      "serial": index + 1,
-      "timestamp": DateTime.now().subtract(Duration(minutes: index * 3)),
-      "value": (15 + index * 7).toStringAsFixed(1), // e.g., "15.0", "22.0"...
-      "isLow": index % 3 == 0, // Randomly mark some as "LOW"
-    },
-  );
+  const HistoryScreen({super.key, required this.history});
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +32,17 @@ class HistoryScreenState extends State<HistoryScreen> {
           ],
         ),
         child: ListView.builder(
-          itemCount: historyData.length,
+          itemCount: history.length,
           itemBuilder: (context, index) {
-            final item = historyData[index];
+            final item = history.reversed.toList()[index]; // Show newest on top
+            final value = double.tryParse(item.value.toString()) ?? 0;
+            final istTime = item.timestamp.add(const Duration(hours: 5, minutes: 30)); 
+
             return EnergyHistoryTile(
-              serialNumber: item['serial'],
-              timestamp: item['timestamp'],
-              value: item['value'],
-              isLow: item['isLow'],
+              serialNumber: index + 1,
+              timestamp: istTime,
+              value: item.value.toString(),
+              isLow: value < 30,
             );
           },
         ),

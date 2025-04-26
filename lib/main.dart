@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:stream_builder/SCREENS/HOME_SCREEN/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:stream_builder/Provider/web_socket_provider.dart';
+import 'package:stream_builder/Screens/home_screen.dart';
 
 void main() {
-  runApp(IOTEnergyMonitoringApp());
+  runApp(
+    MultiProvider(
+      providers: [
+         ChangeNotifierProvider(create: (_) => WebSocketProvider()),
+      ],
+      child: const IOTEnergyMonitoringApp(),
+    ),
+  );
 }
 
 class IOTEnergyMonitoringApp extends StatelessWidget {
@@ -10,7 +19,7 @@ class IOTEnergyMonitoringApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),
     );

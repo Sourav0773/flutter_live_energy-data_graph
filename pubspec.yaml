@@ -11,6 +11,8 @@ dependencies:
   fl_chart: ^0.71.0
   flutter:
     sdk: flutter
+  intl: ^0.20.2
+  provider: ^6.1.4
   syncfusion_flutter_charts: ^29.1.39
   web_socket_channel: ^3.0.3
 

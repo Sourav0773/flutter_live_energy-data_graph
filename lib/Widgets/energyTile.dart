@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EnergyHistoryTile extends StatelessWidget {
   final int serialNumber;
   final DateTime timestamp;
-  final String value; // in kWh
+  final String value;
   final bool isLow;
 
   const EnergyHistoryTile({
@@ -16,12 +17,14 @@ class EnergyHistoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formattedDate = DateFormat('dd MMM yyyy, hh:mm a').format(timestamp);
+
     return Container(
-      height: 100,
+      height: 95,
       width: double.infinity,
       decoration: const BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: Color(0xFFE6E3E3), width: 1.5),
+          bottom: BorderSide(color: Color(0xFFE6E3E3), width: 1.2),
         ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -39,35 +42,45 @@ class EnergyHistoryTile extends StatelessWidget {
             child: Center(
               child: Text(
                 serialNumber.toString(),
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: 18),
 
-          // Timestamp and Value
+          // Value and Timestamp
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Time: ${timestamp.toLocal()}",
-                  style: const TextStyle(
+                  "Value: $value kWh",
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
+                    color: isLow ? Colors.red : Colors.green[700],
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text("Value: $value kWh", style: const TextStyle(color: Colors.grey)),
+                const SizedBox(height: 5),
+                Text(
+                  "Date & Time: $formattedDate",
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 13.5,
+                  ),
+                ),
               ],
             ),
           ),
 
-          // Status
+          // Status Badge
           Container(
             height: 30,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 14),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               color: isLow ? Colors.red.shade100 : Colors.green.shade100,
@@ -76,9 +89,9 @@ class EnergyHistoryTile extends StatelessWidget {
               child: Text(
                 isLow ? "LOW" : "OK",
                 style: TextStyle(
-                  color: isLow ? Colors.red : Colors.green,
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  color: isLow ? Colors.red : Colors.green[800],
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
